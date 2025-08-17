@@ -1,7 +1,7 @@
-# 🛠️ Config Templates
+# 🛠️ LaTeX
 
-[![CI Status](https://github.com/tschm/.config-templates/workflows/CI/badge.svg)](https://github.com/tschm/config-templates/actions)
-[![Release](https://github.com/tschm/.config-templates/workflows/Release%20Workflow/badge.svg)](https://github.com/tschm/config-templates/actions)
+[![CI Status](https://github.com/tschm/latex/workflows/CI/badge.svg)](https://github.com/tschm/latex/actions)
+[![Release](https://github.com/tschm/latex/workflows/Release%20Workflow/badge.svg)](https://github.com/tschm/latex/actions)
 
 A collection of reusable configuration templates for modern Python projects. 
 Save time and maintain consistency across your projects with these 

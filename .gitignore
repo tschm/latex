@@ -1,0 +1,31 @@
+.idea
+.DS_Store
+
+tectonic
+document.pdf
+
+# Instructions by the client
+sow.txt
+
+# files for metadata
+header.tex
+!paper/header.tex
+
+### VisualStudioCode ###
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+
+# Local History for Visual Studio Code
+.history/
+
+# Built Visual Studio Code Extensions
+*.vsix
+
+### VisualStudioCode Patch ###
+# Ignore all local history of files
+.history
+.ionide
