@@ -1,0 +1,14 @@
+name: Build LaTeX PDF
+
+on:
+  push:
+
+permissions:
+  contents: read
+
+jobs:
+  build-latex:
+    uses: ./.github/workflows/latex-build.yml
+    with:
+      working-directory: 'paper'
+      tex-file: 'document.tex'
