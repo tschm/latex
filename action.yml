@@ -47,7 +47,7 @@ runs:
         rm -f "${EXTRACTED_DIR}/action.yml"
         rm -f "${EXTRACTED_DIR}/README.md"
         rm -rf "${EXTRACTED_DIR}/paper"
-        
+
         echo "📂 Copying to working directory..."
         cp -Rf "${EXTRACTED_DIR}/." .
 
