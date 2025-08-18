@@ -45,6 +45,7 @@ runs:
 
         echo "🧹 Removing files not needed for client..."
         rm -f "${EXTRACTED_DIR}/action.yml"
+        rm -f "${EXTRACTED_DIR}/.github/workflows/latex.yml"
         rm -f "${EXTRACTED_DIR}/README.md"
         rm -rf "${EXTRACTED_DIR}/paper"
 
