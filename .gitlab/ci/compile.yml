@@ -2,6 +2,7 @@
 compile:
   stage: build
   image: dxjoke/tectonic-docker:latest
+  needs: []
 
   before_script:
     # git is needed for the make_header.sh script
