@@ -1,0 +1,68 @@
+# Step to prepare HTML and PDFs (runs once per tag)
+prepare_release:
+  stage: release
+  needs:
+    - build-latex
+  script:
+    - OUTPUT_DIR="release_content"
+    - mkdir -p "$OUTPUT_DIR"
+    - cp templates/index.html "$OUTPUT_DIR/index.html"
+
+    # Replace placeholders
+    - sed -i "s|{{ repo_name }}|${CI_PROJECT_NAME}|g" "$OUTPUT_DIR/index.html"
+    - sed -i "s|{{ tag }}|${CI_COMMIT_TAG}|g" "$OUTPUT_DIR/index.html"
+    - sed -i "s|{{ github_repo }}|${CI_PROJECT_PATH}|g" "$OUTPUT_DIR/index.html"
+
+    # Copy PDFs, rename to include tag, and generate HTML links
+    - >
+      find paper -type f -name "*.pdf" | sort | while read -r file; do
+        base=$(basename "$file" .pdf);
+        newname="${base}-${CI_COMMIT_TAG}.pdf";
+        cp "$file" "$OUTPUT_DIR/$newname";
+        printf "<div class='card glass p-4 rounded-lg shadow-md hover:shadow-lg'>\n  <a href='%s' class='block'>\n    <div class='flex items-center'>\n      <svg xmlns='http://www.w3.org/2000/svg' class='h-6 w-6 text-accent-500 mr-3' fill='none' viewBox='0 0 24 24' stroke='currentColor'>\n        <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z' />\n      </svg>\n      <span class='text-gray-200 hover:text-white transition-colors'>%s</span>\n    </div>\n    <div class='mt-2 text-xs text-gray-400 code-font'>Updated: %s</div>\n  </a>\n</div>\n" "$newname" "$newname" "$(date +%Y-%m-%d)";
+      done > "$OUTPUT_DIR/pdf_links.txt"
+
+    # Insert PDF links into index.html
+    - awk '/\{\{ PDF_LINKS \}\}/ {while((getline line < "'"$OUTPUT_DIR/pdf_links.txt"'")>0) print line; next}1' "$OUTPUT_DIR/index.html" > "$OUTPUT_DIR/index_temp.html"
+    - mv "$OUTPUT_DIR/index_temp.html" "$OUTPUT_DIR/index.html"
+
+  artifacts:
+    paths:
+      - release_content/
+  rules:
+    - if: $CI_COMMIT_TAG  # run only for tags
+
+# GitLab Pages deployment (uses the prepared content)
+pages:
+  stage: release
+  needs:
+    - prepare_release
+  script:
+    - mkdir -p public
+    - cp -r release_content/* public/
+  artifacts:
+    paths:
+      - public
+  rules:
+    - if: $CI_COMMIT_TAG
+
+# GitLab Release creation (adds each PDF as an individual asset)
+release:
+  stage: release
+  image: registry.gitlab.com/gitlab-org/release-cli:latest
+  needs:
+    - prepare_release
+  script:
+    - echo "Creating release with PDFs..."
+    # Loop over each PDF and add as an asset
+    - >
+      for pdf in release_content/*.pdf; do
+        filename=$(basename "$pdf");
+        release-cli create \
+          --name "Release $CI_COMMIT_TAG" \
+          --tag-name "$CI_COMMIT_TAG" \
+          --description "Release created by GitLab CI/CD" \
+          --assets-link "{\"name\": \"$filename\", \"url\": \"$CI_PROJECT_URL/-/jobs/$CI_JOB_ID/artifacts/raw/release_content/$filename\", \"type\": \"other\"}";
+      done
+  rules:
+    - if: $CI_COMMIT_TAG

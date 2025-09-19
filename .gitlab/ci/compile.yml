@@ -1,0 +1,34 @@
+# Build LaTeX document
+compile:
+  stage: build
+  image: dxjoke/tectonic-docker:latest
+
+  before_script:
+    # git is needed for the make_header.sh script
+    - apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
+    - git config --global --add safe.directory "$CI_PROJECT_DIR"
+
+  script:
+    # Generate Git metadata and create header.tex
+    - ls -all
+    - echo $CI_PROJECT_DIR
+    - .gitlab/scripts/make_header.sh
+    - cat header.tex
+    - cp header.tex $WORKING_DIRECTORY/header.tex
+
+    # Compile LaTeX document
+    - cd $WORKING_DIRECTORY
+    - tectonic --keep-logs "$TEX_FILE"
+
+    # Extract filename without extension for build environment
+    - FILENAME=$(echo "$TEX_FILE" | sed 's/\.tex$//')
+    - echo "TEX_FILENAME=${FILENAME}" >> build.env
+
+  artifacts:
+    paths:
+      - $WORKING_DIRECTORY/*.*
+
+  only:
+    - main
+    - merge_requests
+    - tags
