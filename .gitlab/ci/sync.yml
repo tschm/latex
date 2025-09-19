@@ -1,7 +1,7 @@
 sync:
   stage: sync
   #rules:
-  when: manual
+  #when: manual
   allow_failure: true #if you want the pipeline to continue even if this job isn't run
 
   needs: []
@@ -46,8 +46,8 @@ sync:
       rm -f "${EXTRACTED_DIR}/make_header.sh"
       rm -rf "${EXTRACTED_DIR}/.github"
       rm -rf "${EXTRACTED_DIR}/paper"
-      
-      
+
+
 
       echo "📂 Copying to working directory..."
       cp -Rf "${EXTRACTED_DIR}/." .
@@ -79,4 +79,4 @@ sync:
       else
         echo "No changes detected, nothing to commit"
       fi
-      
+
