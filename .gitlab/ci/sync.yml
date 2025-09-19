@@ -2,6 +2,7 @@
   stage: sync
   rules:
     - when: manual
+  needs: []
   image: alpine:latest  # git preinstalled
   variables:
     BRANCH_NAME: sync/update-configs
