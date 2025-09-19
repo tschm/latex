@@ -1,0 +1,79 @@
+.sync:
+  stage: sync
+  rules:
+    - when: manual
+  image: alpine:latest  # git preinstalled
+  variables:
+    BRANCH_NAME: sync/update-configs
+    COMMIT_MESSAGE: 'chore: sync config files from latex'
+    REPO_URL: https://github.com/tschm/latex
+  before_script:
+    - apk add --no-cache git curl unzip bash
+  script:
+    - |
+      set -euo pipefail
+
+      # Verify we're in a git repo
+      git rev-parse --is-inside-work-tree > /dev/null || {
+        echo "❌ Not in a git repository"
+        exit 1
+      }
+
+      git config user.name "${GITLAB_USER_NAME:-GitLab CI}"
+      git config user.email "${GITLAB_USER_EMAIL:-gitlab-ci@example.com}"
+      git checkout -B "${BRANCH_NAME}" || git switch "${BRANCH_NAME}"
+
+      # Download templates archive
+      TEMP_DIR="$(mktemp -d)"
+      trap 'rm -rf "$TEMP_DIR"' EXIT
+
+      echo "📥 Downloading template archive..."
+      curl -sSL -o "$TEMP_DIR/templates.zip" "${REPO_URL}/archive/refs/heads/main.zip"
+
+      echo "📦 Extracting..."
+      unzip -q "$TEMP_DIR/templates.zip" -d "$TEMP_DIR"
+
+      # Adjust for GitHub archive folder name
+      EXTRACTED_DIR="$(find $TEMP_DIR -maxdepth 1 -type d -name '*.config-templates*' | head -n 1)"
+
+      echo "🧹 Removing files not needed for client..."
+      rm -f "${EXTRACTED_DIR}/action.yml"
+      rm -f "${EXTRACTED_DIR}/README.md"
+      rm -f "${EXTRACTED_DIR}/.gitignore"
+      rm -f "${EXTRACTED_DIR}/make_header.sh"
+      rm -rf "${EXTRACTED_DIR}/.github"
+      rm -rf "${EXTRACTED_DIR}/paper"
+      
+      
+
+      echo "📂 Copying to working directory..."
+      cp -Rf "${EXTRACTED_DIR}/." .
+
+      echo "✅ Sync complete. Changed files:"
+      git status --short || true
+
+      # Commit and push if there are changes
+      if [[ -n "$(git status --porcelain)" ]]; then
+        git add .
+        git commit -m "${COMMIT_MESSAGE}"
+        git push "https://oauth2:${GITLAB_API_TOKEN}@gitlab.com/${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}.git" "${BRANCH_NAME}" -o ci.skip
+
+
+        # Create MR if token is set
+        if [[ -n "${GITLAB_API_TOKEN:-}" ]]; then
+          echo "Creating merge request..."
+          curl --header "PRIVATE-TOKEN: ${GITLAB_API_TOKEN}" \
+               --data "source_branch=${BRANCH_NAME}" \
+               --data "target_branch=${CI_DEFAULT_BRANCH}" \
+               --data "title=${COMMIT_MESSAGE}" \
+               --data "description=This MR updates configuration files from the config-templates repository." \
+               --data "remove_source_branch=true" \
+               "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/merge_requests"
+        else
+          echo "GITLAB_API_TOKEN not set, skipping merge request creation"
+          echo "Please create a merge request manually from branch ${BRANCH_NAME}"
+        fi
+      else
+        echo "No changes detected, nothing to commit"
+      fi
+      

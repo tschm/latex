@@ -2,15 +2,17 @@ stages:
   - lint
   - build
   - release
+  - sync
 
 variables:
   WORKING_DIRECTORY: "paper"
   TEX_FILE: "document.tex"
 
 default:
-  image: python:3:12-slim-bookworm
+  image: python:3.12-slim-bookworm
 
 include:
   - local: .gitlab/ci/pre-commit.yml
   - local: .gitlab/ci/compile.yml
   - local: .gitlab/ci/deploy.yml
+  - local: .gitlab/ci/sync.yml
