@@ -1,7 +1,9 @@
-.sync:
+sync:
   stage: sync
-  rules:
-    - when: manual
+  #rules:
+  when: manual
+  allow_failure: true #if you want the pipeline to continue even if this job isn't run
+
   needs: []
   image: alpine:latest  # git preinstalled
   variables:
