@@ -10,12 +10,10 @@ compile:
     - git config --global --add safe.directory "$CI_PROJECT_DIR"
 
   script:
-    # Generate Git metadata and create header.tex
-    - ls -all
-    - echo $CI_PROJECT_DIR
+    # Produce the header.tex file
     - .gitlab/scripts/make_header.sh
-    - cat header.tex
-    - cp header.tex $WORKING_DIRECTORY/header.tex
+    # Move the header.tex file to the working directory
+    - mv header.tex $WORKING_DIRECTORY/header.tex
 
     # Compile LaTeX document
     - cd $WORKING_DIRECTORY
