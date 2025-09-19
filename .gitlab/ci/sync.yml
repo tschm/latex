@@ -12,16 +12,9 @@ sync:
     REPO_URL: https://github.com/tschm/latex
   before_script:
     - apt-get update && apt-get install -y git curl unzip bash
-    #- apk add --no-cache git curl unzip bash
   script:
     - |
       set -euo pipefail
-
-      # Verify we're in a git repo
-      #git rev-parse --is-inside-work-tree > /dev/null || {
-      #  echo "❌ Not in a git repository"
-      #  exit 1
-      #}
 
       git config user.name "${GITLAB_USER_NAME:-GitLab CI}"
       git config user.email "${GITLAB_USER_EMAIL:-gitlab-ci@example.com}"

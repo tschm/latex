@@ -2,7 +2,7 @@
 prepare_release:
   stage: release
   needs:
-    - build-latex
+    - compile
   script:
     - OUTPUT_DIR="release_content"
     - mkdir -p "$OUTPUT_DIR"

@@ -15,6 +15,6 @@ pre-commit:
       - git config --global --add safe.directory "$CI_PROJECT_DIR"
 
     script:
-      - pip install pre-commit ruff
+      - pip install pre-commit
       - export PRE_COMMIT_HOME="$CI_PROJECT_DIR/.cache/pre-commit"
       - pre-commit run --all-files
