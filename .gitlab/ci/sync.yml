@@ -10,6 +10,8 @@ sync:
     BRANCH_NAME: sync/update-configs
     COMMIT_MESSAGE: 'chore: sync config files from latex'
     REPO_URL: https://github.com/tschm/latex
+    REPO_NAME: latex
+
   before_script:
     - apt-get update && apt-get install -y git curl unzip bash
   script:
@@ -30,8 +32,7 @@ sync:
       echo "📦 Extracting..."
       unzip -q "$TEMP_DIR/templates.zip" -d "$TEMP_DIR"
 
-      # Adjust for GitHub archive folder name
-      EXTRACTED_DIR="$(find $TEMP_DIR -maxdepth 1 -type d -name '*.config-templates*' | head -n 1)"
+      EXTRACTED_DIR="$(find $TEMP_DIR -maxdepth 1 -type d -name '*$REPO_NAME*' | head -n 1)"
 
       echo "🧹 Removing files not needed for client..."
       rm -f "${EXTRACTED_DIR}/action.yml"
@@ -60,7 +61,7 @@ sync:
                --data "source_branch=${BRANCH_NAME}" \
                --data "target_branch=${CI_DEFAULT_BRANCH}" \
                --data "title=${COMMIT_MESSAGE}" \
-               --data "description=This MR updates configuration files from the config-templates repository." \
+               --data "description=This MR updates configuration files from the ${REPO_URL} repository." \
                --data "remove_source_branch=true" \
                "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/merge_requests"
         else
