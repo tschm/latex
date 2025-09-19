@@ -79,4 +79,3 @@ sync:
       else
         echo "No changes detected, nothing to commit"
       fi
-
