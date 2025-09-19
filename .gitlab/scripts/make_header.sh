@@ -23,16 +23,7 @@ COMMIT_SHA=$(git rev-parse --short HEAD)
 BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
 COMMIT_DATE=$(git log -1 --format=%cd --date=short)
 TAG_NAME=$(git describe --tags --abbrev=0 2>/dev/null || echo "untagged")
-
-# -----------------------------
-# Repository URL
-# -----------------------------
-REPO_URL=$(git config --get remote.origin.url || echo ".")
-if [[ "$REPO_URL" =~ ^git@ ]]; then
-    REPO_URL=$(echo "$REPO_URL" | sed -E 's#git@(.*):(.*)\.git#https://\1/\2#')
-else
-    REPO_URL=${REPO_URL%.git}
-fi
+REPO_URL="${CI_PROJECT_URL:-"https://gitlab.com"}"
 
 echo "COMMIT_SHA: $COMMIT_SHA"
 echo "BRANCH_NAME: $BRANCH_NAME"
