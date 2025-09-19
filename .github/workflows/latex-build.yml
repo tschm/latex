@@ -34,7 +34,7 @@ jobs:
       - name: Run make_header.sh
         run: |
           # Produce the header.tex file
-          .gitlab/scripts/make_header.sh
+          .github/scripts/make_header.sh
           # Move the header.tex file to the working directory
           mv header.tex ${{ inputs.working-directory }}/header.tex
 
