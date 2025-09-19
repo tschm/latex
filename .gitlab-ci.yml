@@ -8,9 +8,6 @@ variables:
   WORKING_DIRECTORY: "paper"
   TEX_FILE: "document.tex"
 
-default:
-  image: python:3.12-slim-bookworm
-
 include:
   - local: .gitlab/ci/pre-commit.yml
   - local: .gitlab/ci/compile.yml

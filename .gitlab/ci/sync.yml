@@ -1,5 +1,6 @@
 sync:
   stage: sync
+  image: debian:bookworm-slim
   rules:
     - when: manual
   allow_failure: true
