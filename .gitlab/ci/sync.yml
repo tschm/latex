@@ -5,7 +5,6 @@ sync:
   allow_failure: true #if you want the pipeline to continue even if this job isn't run
 
   needs: []
-  #image: alpine:latest  # git preinstalled
   variables:
     BRANCH_NAME: sync/update-configs
     COMMIT_MESSAGE: 'chore: sync config files from latex'
@@ -27,23 +26,21 @@ sync:
       trap 'rm -rf "$TEMP_DIR"' EXIT
 
       echo "📥 Downloading template archive..."
-      curl -sSL -o "$TEMP_DIR/templates.zip" "${REPO_URL}/archive/refs/heads/main.zip"
-
-      echo "📦 Extracting..."
-      unzip -q "$TEMP_DIR/templates.zip" -d "$TEMP_DIR"
-
-      EXTRACTED_DIR="$(find $TEMP_DIR -maxdepth 1 -type d -name '*$REPO_NAME*' | head -n 1)"
+      git clone "${REPO_URL}" "$TEMP_DIR"
+      
+      ls -all "$TEMP_DIR"
 
       echo "🧹 Removing files not needed for client..."
-      rm -f "${EXTRACTED_DIR}/action.yml"
-      rm -f "${EXTRACTED_DIR}/README.md"
-      rm -f "${EXTRACTED_DIR}/.gitignore"
-      rm -f "${EXTRACTED_DIR}/make_header.sh"
-      rm -rf "${EXTRACTED_DIR}/.github"
-      rm -rf "${EXTRACTED_DIR}/paper"
+      rm -f "${TEMP_DIR}/action.yml"
+      rm -f "${TEMP_DIR}/README.md"
+      rm -f "${TEMP_DIR}/.gitignore"
+      rm -f "${TEMP_DIR}/make_header.sh"
+      rm -rf "${TEMP_DIR}/.github"
+      rm -rf "${TEMP_DIR}/paper"
+      rm -rf "${TEMP_DIR}/.git"
 
       echo "📂 Copying to working directory..."
-      cp -Rf "${EXTRACTED_DIR}/." .
+      cp -Rf "${TEMP_DIR}/." .
 
       echo "✅ Sync complete. Changed files:"
       git status --short || true
