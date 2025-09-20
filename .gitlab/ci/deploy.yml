@@ -18,12 +18,6 @@ prepare_release:
     - sed -i "s|{{ tag }}|${CI_COMMIT_TAG}|g" "$OUTPUT_DIR/index.html"
     - sed -i "s|{{ github_repo }}|${CI_PROJECT_PATH}|g" "$OUTPUT_DIR/index.html"
 
-    # Check if PDFs exist before processing
-    #- if [ ! -d paper ] || [ -z "$(ls paper/*.pdf 2>/dev/null)" ]; then
-    #    echo "Error: No PDF files found in paper/ directory"
-    #    exit 1
-    #  fi
-
     # Initialize empty JSON array
     - assets_json=$(jq -n '[]')
     - rm -f "$OUTPUT_DIR/pdf_links.txt"
