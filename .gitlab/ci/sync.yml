@@ -35,7 +35,7 @@ sync:
       git clone --depth 1 "${REPO_URL}" "$TEMP_DIR"
 
       # Remove files not needed
-      rm -f "${TEMP_DIR}/action.yml" "${TEMP_DIR}/README.md" "${TEMP_DIR}/.gitignore"
+      rm -f "${TEMP_DIR}/action.yml" "${TEMP_DIR}/README.md" "${TEMP_DIR}/.gitignore" "${TEMP_DIR}/.gitlab-ci.yml"
       rm -rf "${TEMP_DIR}/.github" "${TEMP_DIR}/paper" "${TEMP_DIR}/.git"
 
       # Copy remaining files
