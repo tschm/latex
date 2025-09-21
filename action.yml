@@ -46,7 +46,6 @@ runs:
         echo "🧹 Removing files not needed for client..."
 
         rm -f "${EXTRACTED_DIR}/action.yml"
-        rm -f "${EXTRACTED_DIR}/.gitlab-ci.yml"
         
         # In this file we specify which files exactly shall be compiled.
         # This depends highly on the exact repo we are in.
@@ -56,9 +55,6 @@ runs:
         
         # Paper is only there to test the workflows here...
         rm -rf "${EXTRACTED_DIR}/paper"
-
-        # Don't need the Gitlab workflows in GitHub
-        rm -rf "${EXTRACTED_DIR}/.gitlab"
 
         echo "📂 Copying to working directory..."
         cp -Rf "${EXTRACTED_DIR}/." .
