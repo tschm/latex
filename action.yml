@@ -46,13 +46,13 @@ runs:
         echo "🧹 Removing files not needed for client..."
 
         rm -f "${EXTRACTED_DIR}/action.yml"
-        
+
         # In this file we specify which files exactly shall be compiled.
         # This depends highly on the exact repo we are in.
         rm -f "${EXTRACTED_DIR}/.github/workflows/latex.yml"
-        
+
         rm -f "${EXTRACTED_DIR}/README.md"
-        
+
         # Paper is only there to test the workflows here...
         rm -rf "${EXTRACTED_DIR}/paper"
 
