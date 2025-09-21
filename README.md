@@ -5,7 +5,7 @@
 
 A professional LaTeX template repository with GitHub Actions
 for academic and technical documents.
-Streamline your document workflow with automated compilation 
+Streamline your document workflow with automated compilation
 and template management.
 
 ## Overview
