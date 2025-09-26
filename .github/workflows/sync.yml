@@ -32,4 +32,3 @@ jobs:
         with:
           token: ${{ secrets.PAT_TOKEN }}
           source: .github/template.yml
-
