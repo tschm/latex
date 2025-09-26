@@ -29,5 +29,5 @@ jobs:
         with:
           token: ${{ secrets.PAT_TOKEN }}
           source: ".github/template.yml"
-          branch: "main"
+          branch: "template-updates"
           commit-message: "chore: sync template files"
