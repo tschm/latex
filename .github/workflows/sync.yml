@@ -9,7 +9,7 @@
 #   - 🔄 Sync configuration templates
 #   - 📝 Create a pull request with the changes
 
-name: Sync Files
+name: SYNC
 
 on:
   workflow_dispatch:
@@ -17,18 +17,24 @@ on:
     - cron: '0 0 * * 1'  # Weekly on Monday at midnight
 
 permissions:
-  contents: write
-  pull-requests: write
+  contents: write  # Needed to create releases
 
 jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Checkout the target repo
         uses: actions/checkout@v5
-
-      - name: Sync specific folders from template
-        uses: jebel-quant/sync_template@main
         with:
           token: ${{ secrets.PAT_TOKEN }}
-          source: .github/template.yml
+          fetch-depth: 0
+          persist-credentials: 'false'
+
+      - name: Sync Template
+        id: sync
+        uses: jebel-quant/sync_template@hot-v0.3.0
+        with:
+          token: ${{ secrets.PAT_TOKEN }}
+          source: ".github/template.yml"
+          branch: "main"
+          commit-message: "chore: sync template files"
