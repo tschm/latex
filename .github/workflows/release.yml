@@ -23,7 +23,7 @@ jobs:
 
     steps:
       - name: Checkout [${{ github.repository }}]
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Create and Push Tag
         run: |
@@ -46,10 +46,10 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Download compiled PDF
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v8
         with:
           path: compiled
 
@@ -89,7 +89,7 @@ jobs:
           cat compiled/index.html
 
       - name: Create GitHub release
-        uses: softprops/action-gh-release@v2.3.4
+        uses: softprops/action-gh-release@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           tag_name: ${{ github.event.inputs.tag }}
@@ -97,13 +97,13 @@ jobs:
           files: compiled/**/*.pdf
 
       - name: Setup Pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@v5
         with:
           path: compiled
 
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
