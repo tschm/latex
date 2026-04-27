@@ -1,0 +1,7 @@
+site_name: latex
+theme:
+  name: material
+  palette:
+    scheme: slate
+    primary: indigo
+    accent: indigo
