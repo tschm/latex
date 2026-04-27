@@ -45,6 +45,3 @@ else ifeq ($(FORGE_TYPE),gitlab)
 else
 	@printf "${RED}[ERROR] Could not detect forge type (.github/workflows/ or .gitlab-ci.yml not found)${RESET}\n"
 endif
-
-
-

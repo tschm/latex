@@ -18,7 +18,7 @@ and all tests pass.
 ## Building from source
 
 You'll need to build the project locally to start editing code.
-To install from source, clone the repository from GitHub, 
+To install from source, clone the repository from GitHub,
 navigate to its root, and run the following command:
 
 ```bash
@@ -62,7 +62,7 @@ structured prefix so tooling can generate changelogs automatically.
 
 ### Format
 
-```
+```text
 <type>(<scope>): <short summary>
 ```
 
@@ -84,7 +84,7 @@ structured prefix so tooling can generate changelogs automatically.
 
 ### Examples
 
-```
+```text
 feat(templates): add devcontainer template for Python 3.13
 fix: resolve path issue in bootstrap script
 docs: update CONTRIBUTING with commit conventions
@@ -95,7 +95,7 @@ ci: cache uv dependencies in GitHub Actions
 
 Append `!` after the type/scope and add a `BREAKING CHANGE:` footer:
 
-```
+```text
 feat!: rename make target from `book` to `docs`
 
 BREAKING CHANGE: `make book` no longer exists; use `make docs`.
@@ -104,7 +104,7 @@ BREAKING CHANGE: `make book` no longer exists; use `make docs`.
 ## Code style
 
 We use ruff to enforce our Python coding style.
-Before sending us a pull request, navigate to the project 
+Before sending us a pull request, navigate to the project
 root and run
 
 ```bash

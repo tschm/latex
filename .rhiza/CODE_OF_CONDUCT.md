@@ -2,7 +2,8 @@
 
 ## Purpose
 
-This code of conduct outlines expectations for behaviour when participating in the project with the aim of fostering a constructive and professional engineering environment.
+This code of conduct outlines expectations for behaviour when participating in the project
+with the aim of fostering a constructive and professional engineering environment.
 
 ## Expected Behaviour
 
@@ -16,11 +17,13 @@ Participants are expected to:
 
 ## Scope
 
-This Code of Conduct applies in all project spaces—online and offline—and also applies when individuals are representing the project in public spaces.
+This Code of Conduct applies in all project spaces—online and offline—and also applies when
+individuals are representing the project in public spaces.
 
 ## Enforcement
 
-Project maintainers are responsible for enforcing the code and may take proportionate corrective action in response to unexpected behaviour.
+Project maintainers are responsible for enforcing the code and may take proportionate
+corrective action in response to unexpected behaviour.
 
 ## Attribution
 
