@@ -1,4 +1,11 @@
-pre-commit:
+name: Pre-commit
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  pre-commit:
     name: Pre-commit hooks
     runs-on: ubuntu-latest
 
