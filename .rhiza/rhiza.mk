@@ -1,5 +1,5 @@
-## Makefile for jebel-quant/rhiza
-# (https://github.com/jebel-quant/rhiza)
+## Makefile for tschm/latex
+# (https://github.com/tschm/latex)
 #
 # Purpose: Developer tasks using uv/uvx (install, test, book).
 # Lines with `##` after a target are parsed into help text,
@@ -89,8 +89,8 @@ print-logo:
 
 
 sync: pre-sync ## sync with template repository as defined in .rhiza/template.yml
-	@if git remote get-url origin 2>/dev/null | grep -iqE 'jebel-quant/rhiza(\.git)?$$'; then \
-		printf "${BLUE}[INFO] Skipping sync in rhiza repository (no template.yml by design)${RESET}\n"; \
+	@if git remote get-url origin 2>/dev/null | grep -iqE 'tschm/latex(\.git)?$$'; then \
+		printf "${BLUE}[INFO] Skipping sync in tschm/latex repository (no template.yml by design)${RESET}\n"; \
 	else \
 		$(MAKE) install-uv; \
 		${UVX_BIN} "rhiza==$(RHIZA_VERSION)" sync .; \
@@ -98,8 +98,8 @@ sync: pre-sync ## sync with template repository as defined in .rhiza/template.ym
 	@$(MAKE) post-sync
 
 summarise-sync: install-uv ## summarise differences created by sync with template repository
-	@if git remote get-url origin 2>/dev/null | grep -iqE 'jebel-quant/rhiza(\.git)?$$'; then \
-		printf "${BLUE}[INFO] Skipping summarise-sync in rhiza repository (no template.yml by design)${RESET}\n"; \
+	@if git remote get-url origin 2>/dev/null | grep -iqE 'tschm/latex(\.git)?$$'; then \
+		printf "${BLUE}[INFO] Skipping summarise-sync in tschm/latex repository (no template.yml by design)${RESET}\n"; \
 	else \
 		$(MAKE) install-uv; \
 		${UVX_BIN} "rhiza==$(RHIZA_VERSION)" summarise .; \
