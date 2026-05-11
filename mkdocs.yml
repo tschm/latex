@@ -1,4 +1,9 @@
 site_name: latex
+site_dir: site
+
+nav:
+  - Document: document.pdf
+
 theme:
   name: material
   palette:
