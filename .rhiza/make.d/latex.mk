@@ -2,9 +2,9 @@
 
 ##@ LaTeX
 
-.PHONY: uv
-uv:  ## Install uv if not already installed
-	@curl -LsSf https://astral.sh/uv/install.sh | sh
+.PHONY: install-uv
+install-uv:  ## Install uv if not already installed
+	@command -v uv >/dev/null 2>&1 || curl -LsSf https://astral.sh/uv/install.sh | sh
 
 .PHONY: compile
 compile: install  ## Compile document(s)
@@ -20,5 +20,5 @@ install:  ## Install tectonic
 	@echo $$PATH
 
 .PHONY: fmt
-fmt: uv  ## Run autoformatting and linting
+fmt: install-uv  ## Run autoformatting and linting
 	@uvx pre-commit run --all-files
