@@ -42,6 +42,7 @@ jobs:
 
       - name: Build site
         run: |
+          mkdir -p docs
           find compiled -type f -name "*.pdf" | sort | while read -r file; do
             cp "$file" "docs/$(basename "$file")"
           done
