@@ -1,6 +1,10 @@
 site_name: latex
 site_dir: site
 
+site_author: Thomas Schmelzer
+
+copyright: Copyright &copy; 2024–2026 Thomas Schmelzer
+
 nav:
   - Document: document.pdf
 
