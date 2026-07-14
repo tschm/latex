@@ -88,7 +88,7 @@ print-logo:
 	@printf "${BLUE}$$RHIZA_LOGO${RESET}\n"
 
 
-sync: pre-sync ## sync with template repository as defined in .rhiza/template.yml
+sync: pre-sync ## sync with tsemplate repository as defined in .rhiza/template.yml
 	@if git remote get-url origin 2>/dev/null | grep -iqE 'tschm/latex(\.git)?$$'; then \
 		printf "${BLUE}[INFO] Skipping sync in tschm/latex repository (no template.yml by design)${RESET}\n"; \
 	else \
